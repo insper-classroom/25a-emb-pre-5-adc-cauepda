@@ -23,16 +23,37 @@ void data_task(void *p) {
     }
 }
 
+void sendToUART(int value) {
+    printf("%d\n", value);
+}
+
 void process_task(void *p) {
     int data = 0;
+    int len_mean = 5;
+    double fila_dividendo[len_mean];
+    int index1 = 0;
+    int sum = 0;
+    int index2 = 0;
+
 
     while (true) {
         if (xQueueReceive(xQueueData, &data, 100)) {
             // implementar filtro aqui!
+                if (index1 < len_mean) {
+                    fila_dividendo[index1] = data;
+                    sum += data;
+                    index1++;
 
-
-
-
+                }
+                else {
+                    sendToUART(sum / len_mean);
+                    sum -= fila_dividendo[index2];
+                    sum += data;
+                    fila_dividendo[index2] = data;
+                    index2++;
+                    if (index2 > 5)
+                        index2 = 0;
+                }
             // deixar esse delay!
             vTaskDelay(pdMS_TO_TICKS(50));
         }
