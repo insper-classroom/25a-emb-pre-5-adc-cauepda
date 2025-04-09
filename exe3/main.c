@@ -50,7 +50,7 @@ void process_task(void *p) {
                     sum += data;
                     fila_dividendo[index2] = data;
                     index2++;
-                    if (index2 > 5)
+                    if (index2 >= len_mean)
                         index2 = 0;
                 }
             // deixar esse delay!
