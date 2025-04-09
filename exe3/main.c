@@ -22,10 +22,6 @@ void data_task(void *p) {
     }
 }
 
-void sendToUART(int value) {
-    printf("%d\n", value);
-}
-
 void process_task(void *p) {
     int data = 0;
     const int len_mean = 5;
@@ -41,15 +37,16 @@ void process_task(void *p) {
                 fila_dividendo[index1] = data;
                 sum += data;
                 index1++;
+                printf("%d\n", sum / len_mean);
             }
             else {
-                sendToUART(sum / len_mean);
+                printf("%d\n", sum / len_mean);
                 // Atualiza a média com o novo valor, descartando o valor mais antigo
                 sum -= fila_dividendo[index2];
                 sum += data;
                 fila_dividendo[index2] = data;
                 index2++;
-                if (index2 > 5)
+                if (index2 >= len_mean)
                     index2 = 0;
             }
             // Deixar esse delay!
